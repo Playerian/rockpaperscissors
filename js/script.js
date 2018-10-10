@@ -10,6 +10,7 @@ var $uScore = $("#uScore");
 var $cScore = $("#cScore");
 var uScore = 0;
 var cScore = 0;
+var enrage = false;
 
 // DOCUMENT READY FUNCTION BELOW
 $(document).ready(function(){
@@ -48,6 +49,15 @@ function play(user){
     //rock 1
     //computer decides what to play
     var comp = randomInt(1,3);
+    //check enrage
+    if (enrage === true){
+        comp = user;
+        if (user < 3){
+            comp ++;
+        }else{
+            comp = 1;
+        }
+    }
     //rendering
     $("#userImage").attr("src","image/"+user+".png");
     $("#compImage").attr("src","image/"+comp+".png");
