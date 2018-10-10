@@ -64,11 +64,15 @@ function play(user){
     var result = compare(user,comp);
     if (result === 1){
         $("#result").text("You win!");
+        uScore ++;
     }else if(result === 2){
         $("#result").text("It's a draw!");
+        cScore ++;
     }else{
         $("#result").text("Computer wins!");
     }
+    $uScore.text("User Score: "+uScore);
+    $cScore.text("Comp Score: "+cScore);
 }
 
 function compare(user, comp){
