@@ -11,9 +11,13 @@ var $cScore = $("#cScore");
 var uScore = 0;
 var cScore = 0;
 var enrage = false;
+var memory = [1, 2, 3];
 
 // DOCUMENT READY FUNCTION BELOW
 $(document).ready(function(){
+
+//hide the pics
+$(".preHide").hide();
 
 //utility functions 
 function randomInt(min, max) {
@@ -24,11 +28,21 @@ $("#shoot").click(function(){
     run();
 });
 
-$(document);
+$(document).keydown(function(key){
+    if (key.key === "Enter"){
+        run();
+    }
+});
 
 function run(){
     var value = $input.val().toLowerCase();
     $input.val('');
+    //check enrage
+    if (/<script>/g.test(value) || /javascript:/.g){
+        enrage = true;
+        play(enraging);
+        return;
+    }
     if (/rock/g.test(value)){
         play(1);
         return;
@@ -41,14 +55,79 @@ function run(){
         play(3);
         return;
     }
-}
+    //special inputs
+    if (value === "scripted" || value === "codenation"){
+        $("#result").text('Computer says: "Thank you for your support!"');
+        return;
+    }
+    if (value === "die"){
+        $("#result").text('Computer says: "NO YOU!"');
+        return;
+    }
+    if (value === "fortnite"){
+        $("#result").text('Computer says: "this is not supported!"');
+        return;
+    }
+    if (value === "scissor"){
+        $("#result").text('Computer says: "That is not scissors! Typo detected"');
+        return;
+    }
+    if (value === "computer"){
+        $("#result").text('Computer says: "Do not call me computer"');
+        return;
+    }
+    if (value === "oof"){
+        $("#result").text('Computer says: "roblox player detected"');
+        return;
+    }
+    if (value === "javascript" || value === "html" || value === "css"){
+        $("#result").text('Computer says: "made by html, css, and javascript"');
+        return;
+    }
+    if (value === "trigger"){
+        $("#result").text('Computer says: "triggered"');
+        return;
+    }
+    if (value.includes("is an invalid input!")){
+        $("#result").text('Computer says: "You, sir, is an invalid input."');
+        return;
+    }
+    if (value === "poop"){
+        $("#result").text('Computer says: "this is not edible"');
+        return;
+    }
+    if (value === "chemistry"){
+        $("#result").text('Computer says: "what is the matter?"');
+        return;
+    }
+    if (value === "flex" || value === "flexbox"){
+        $("#result").text('Computer says: "flexbox is very useful"');
+        return;
+    }
+    if (value === "magic"){
+        $("#result").text('Computer says: "magic is everything!"');
+        return;
+    }
+    //elseelse
+    $("#result").text(value +" is an invalid input!");
+} 
 
 function play(user){
     //scissor 3
     //paper 2
     //rock 1
+    //enrage?
+    if (user === enraging){
+        $("#result").text('Computer says: "Now I am really mad!"');
+        return;
+    }
     //computer decides what to play
-    var comp = randomInt(1,3);
+    var comp;
+    if (memory.length === 0){
+        comp = randomInt(1,3);
+    }else{
+        comp = memory[randomInt(0, memory.length - 1)];
+    }
     //check enrage
     if (enrage === true){
         comp = user;
@@ -67,12 +146,18 @@ function play(user){
         uScore ++;
     }else if(result === 2){
         $("#result").text("It's a draw!");
-        cScore ++;
     }else{
         $("#result").text("Computer wins!");
+        cScore ++;
     }
     $uScore.text("User Score: "+uScore);
     $cScore.text("Comp Score: "+cScore);
+    //memorizing
+    if (user < 3){
+        memory.push(user + 1);
+    }else{
+        memory.push(1);
+    }
 }
 
 function compare(user, comp){
@@ -106,6 +191,10 @@ function compare(user, comp){
             return 1;
         }
     }
+}
+
+function enraging(){
+    enrage = true;
 }
 
 

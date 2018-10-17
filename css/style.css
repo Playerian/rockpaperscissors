@@ -11,8 +11,14 @@
 .image{
   width:200px;
   height:200px;
+  border:1px solid black;
 }
 
 #result{
   font-size:40px;
+}
+
+#title{
+  border:solid 5px black;
+  background:#6a7495;
 }
