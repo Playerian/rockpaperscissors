@@ -108,6 +108,14 @@ function run(){
         $("#result").text('Computer says: "magic is everything!"');
         return;
     }
+    if (value === "i"){
+        $("#result").text('I am not an invalid input, what you typed are.');
+        return;
+    }
+    if (value === "you"){
+        $("#result").text('You are an invalid input.');
+        return;
+    }
     //elseelse
     $("#result").text(value +" is an invalid input!");
 } 
