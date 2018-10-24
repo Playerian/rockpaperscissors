@@ -11,7 +11,9 @@ var $cScore = $("#cScore");
 var uScore = 0;
 var cScore = 0;
 var enrage = false;
+var tempEnrage = false;
 var memory = [1, 2, 3];
+var lock = false;
 
 // DOCUMENT READY FUNCTION BELOW
 $(document).ready(function(){
@@ -35,6 +37,15 @@ $(document).keydown(function(key){
 });
 
 function run(){
+    if (lock){
+        lock = false;
+        cScore = 0;
+        uScore = 0;
+        $uScore.text("User Score: "+uScore);
+        $cScore.text("Comp Score: "+cScore);
+        $("#result").text('');
+        return;
+    }
     var value = $input.val().toLowerCase();
     $input.val('');
     //check enrage
@@ -84,7 +95,7 @@ function run(){
         $("#result").text('Computer says: "made by html, css, and javascript"');
         return;
     }
-    if (value === "trigger"){
+    if (value === "trigger" || value === "trig"){
         $("#result").text('Computer says: "triggered"');
         return;
     }
@@ -92,7 +103,7 @@ function run(){
         $("#result").text('Computer says: "You, sir, is an invalid input."');
         return;
     }
-    if (value === "poop"){
+    if (value === "poop" || value === "poo"){
         $("#result").text('Computer says: "this is not edible"');
         return;
     }
@@ -116,6 +127,11 @@ function run(){
         $("#result").text('You are an invalid input.');
         return;
     }
+    if (value === "memoryclear"){
+        $("#result").text('Computer says: "Wait! Dont do it!"');
+        memory = [1, 2, 3];
+        return;
+    }
     //elseelse
     $("#result").text(value +" is an invalid input!");
 } 
@@ -137,12 +153,17 @@ function play(user){
         comp = memory[randomInt(0, memory.length - 1)];
     }
     //check enrage
-    if (enrage === true){
+    if (enrage|| tempEnrage ){
         comp = user;
         if (user < 3){
             comp ++;
         }else{
             comp = 1;
+        }
+        if (tempEnrage){
+            if (uScore - 1 === cScore){
+                tempEnrage = false;
+            }
         }
     }
     //rendering
@@ -165,6 +186,20 @@ function play(user){
         memory.push(user + 1);
     }else{
         memory.push(1);
+    }
+    if (uScore - 3 >= cScore){
+        tempEnrage = true;
+        $("#result").text("Computer is getting mad!");
+    }
+    if (uScore >= 20){
+        $("#result").text('Congratulation! You win!');
+        $("#shoot").text("Restart!");
+        lock = true;
+    }
+    if (cScore >= 20){
+        $("#result").text('Sad! The Computer has defeated you!');
+        $("#shoot").text("Restart!");
+        lock = true;
     }
 }
 
