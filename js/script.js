@@ -132,6 +132,20 @@ function run(){
         memory = [1, 2, 3];
         return;
     }
+    if (value === "calm"){
+        $("#result").text('The Computer is getting calm in expense of losing a point');
+        enrage = false;
+        tempEnrage = false;
+        cScore ++;
+        $cScore.text("Comp Score: "+cScore);
+        return;
+    }
+    if (value === "cheat"){
+        $("#result").text('You cheated!');
+        uScore ++;
+        $uScore.text("User Score: "+uScore);
+        return;
+    }
     //elseelse
     $("#result").text(value +" is an invalid input!");
 } 
